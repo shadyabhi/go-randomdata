@@ -28,8 +28,9 @@ type Profile struct {
 		Postcode int    `json:"postcode"`
 	} `json:"location"`
 
-	Email string `json:"email"`
-	Login struct {
+	Email   string `json:"email"`
+	Website string `json:"website"`
+	Login   struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
 		Salt     string `json:"salt"`
@@ -108,7 +109,10 @@ func GenerateProfile(gender int) *Profile {
 		Number(100, 9999),
 	)
 
-	profile.Email = strings.ToLower(profile.Name.First) + "." + strings.ToLower(profile.Name.Last) + "@example.com"
+	domain := Domain()
+	profile.Email = strings.ToLower(profile.Name.First) + "." + strings.ToLower(profile.Name.Last) + "@" + domain
+	profile.Website = domain
+
 	profile.Cell = PhoneNumber()
 	profile.Phone = PhoneNumber()
 	profile.Dob = FullDate()
